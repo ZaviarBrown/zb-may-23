@@ -43,12 +43,31 @@ export const removeFromCart = (id) => {
 
 export const selectCart = (store) => store.cart;
 export const selectCartItemById = (id) => (store) => store.cart[id];
+// export const selectCartItems = createSelector(
+//     selectCart,
+//     selectProduce,
+//     (cart, produce) =>
+//         Object.values(cart).map((item) => ({ ...item, ...produce[item.id] }))
+// );
+
+//! ------------------------- After Bonus Refactor ----------------------------
+
+// const cartStore = {
+//     order: [3, 1, 11, 7, 4],
+//     1: {},
+//     2: {},
+//     3: {},
+//     // ...
+// };
+
 export const selectCartItems = createSelector(
     selectCart,
     selectProduce,
     (cart, produce) =>
-        Object.values(cart).map((item) => ({ ...item, ...produce[item.id] }))
+        cart.order.map((itemId) => ({ ...cart[itemId], ...produce[itemId] }))
 );
+
+export const selectCartArray = (store) => store.cart.order;
 
 //! --------------------------------------------------------------------
 //*                             Reducer
@@ -56,10 +75,10 @@ export const selectCartItems = createSelector(
 
 export const purchase = () => ({ type: PURCHASE });
 
-const initialState = {};
+const initialState = { order: [] };
 
 export default function cartReducer(state = initialState, action) {
-    const newState = { ...state };
+    const newState = { ...state, order: [...state.order] };
 
     switch (action.type) {
         case ADD_TO_CART:
@@ -72,6 +91,7 @@ export default function cartReducer(state = initialState, action) {
                     id: action.payload,
                     count: 1,
                 };
+                newState.order.push(action.payload);
             }
             return newState;
 
@@ -81,6 +101,11 @@ export default function cartReducer(state = initialState, action) {
 
         case REMOVE_FROM_CART:
             delete newState[action.payload];
+
+            newState.order = newState.order.filter(
+                (id) => id !== action.payload
+            );
+
             return newState;
 
         case PURCHASE:

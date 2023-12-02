@@ -26,9 +26,7 @@ function CartItem({ item }) {
                     type="number"
                     value={count}
                     onChange={(e) => {
-                        console.log(Number(e.target.value));
                         setCount(Number(e.target.value));
-                        console.log(count);
                     }}
                     onBlur={() => handleUpdate(count)}
                 />
