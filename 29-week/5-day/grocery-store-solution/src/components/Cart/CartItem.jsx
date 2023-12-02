@@ -25,7 +25,11 @@ function CartItem({ item }) {
                 <input
                     type="number"
                     value={count}
-                    onChange={(e) => setCount(Number(e.target.value))}
+                    onChange={(e) => {
+                        console.log(Number(e.target.value));
+                        setCount(Number(e.target.value));
+                        console.log(count);
+                    }}
                     onBlur={() => handleUpdate(count)}
                 />
                 <button

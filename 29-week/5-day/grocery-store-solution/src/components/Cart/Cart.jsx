@@ -1,8 +1,10 @@
 import CartItem from './CartItem';
 import './Cart.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { purchase } from '../../store/cart';
 
 function Cart() {
+    const dispatch = useDispatch();
     const cart = useSelector((store) => store.cart);
     const produce = useSelector((store) => store.produce);
 
@@ -20,8 +22,11 @@ function Cart() {
             </div>
         );
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
+
+        dispatch(purchase());
+
         window.alert(
             'Purchased the following:\n' +
                 `${cartItems
