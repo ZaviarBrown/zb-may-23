@@ -1,10 +1,18 @@
 const ADD_TO_CART = 'cart/addToCart';
+const REMOVE_FROM_CART = 'cart/removeFromCart';
 
 export const addToCart = (id) => {
     return {
         type: ADD_TO_CART,
         payload: id,
         // payload: { id, count: 1 },
+    };
+};
+
+export const removeFromCart = (id) => {
+    return {
+        type: REMOVE_FROM_CART,
+        payload: id,
     };
 };
 
@@ -18,7 +26,6 @@ export default function cartReducer(state = initialState, action) {
             if (newState[action.payload]) {
                 const innerCopy = { ...newState[action.payload] }; // not necessary in this case
                 innerCopy.count++;
-
                 newState[action.payload] = innerCopy;
             } else {
                 newState[action.payload] = {
@@ -26,7 +33,10 @@ export default function cartReducer(state = initialState, action) {
                     count: 1,
                 };
             }
+            return newState;
 
+        case REMOVE_FROM_CART:
+            delete newState[action.payload];
             return newState;
 
         default:
