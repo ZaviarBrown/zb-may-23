@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeFromCart } from '../../store/cart';
+import { removeFromCart, updateCart } from '../../store/cart';
 
 function CartItem({ item }) {
     const dispatch = useDispatch();
@@ -10,6 +10,14 @@ function CartItem({ item }) {
         setCount(item.count);
     }, [item.count]);
 
+    const handleUpdate = (newCount) => {
+        if (newCount <= 0) {
+            dispatch(removeFromCart(item.id));
+        } else {
+            dispatch(updateCart({ id: item.id, count: newCount }));
+        }
+    };
+
     return (
         <li className="cart-item">
             <div className="cart-item-header">{item.name}</div>
@@ -17,10 +25,21 @@ function CartItem({ item }) {
                 <input
                     type="number"
                     value={count}
-                    onChange={() => 'TODO: come back here'} // TODO: PLEASE DON'T FORGET
+                    onChange={(e) => setCount(Number(e.target.value))}
+                    onBlur={() => handleUpdate(count)}
                 />
-                <button className="cart-item-button">+</button>
-                <button className="cart-item-button">-</button>
+                <button
+                    onClick={() => handleUpdate(count + 1)}
+                    className="cart-item-button"
+                >
+                    +
+                </button>
+                <button
+                    onClick={() => handleUpdate(count - 1)}
+                    className="cart-item-button"
+                >
+                    -
+                </button>
                 <button
                     onClick={() => dispatch(removeFromCart(item.id))}
                     className="cart-item-button"

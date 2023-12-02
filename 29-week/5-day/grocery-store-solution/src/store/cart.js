@@ -1,5 +1,6 @@
 const ADD_TO_CART = 'cart/addToCart';
 const REMOVE_FROM_CART = 'cart/removeFromCart';
+const UPDATE_CART = 'cart/updateCart';
 
 export const addToCart = (id) => {
     return {
@@ -13,6 +14,14 @@ export const removeFromCart = (id) => {
     return {
         type: REMOVE_FROM_CART,
         payload: id,
+    };
+};
+
+// { id, count }
+export const updateCart = (payload) => {
+    return {
+        type: UPDATE_CART,
+        payload,
     };
 };
 
@@ -33,6 +42,10 @@ export default function cartReducer(state = initialState, action) {
                     count: 1,
                 };
             }
+            return newState;
+
+        case UPDATE_CART:
+            newState[action.payload.id] = action.payload;
             return newState;
 
         case REMOVE_FROM_CART:
