@@ -1,7 +1,18 @@
+//! --------------------------------------------------------------------
+//*                            Action Types
+//! --------------------------------------------------------------------
+
+import { createSelector } from 'reselect';
+import { selectProduce } from './produce';
+
 const ADD_TO_CART = 'cart/addToCart';
 const REMOVE_FROM_CART = 'cart/removeFromCart';
 const UPDATE_CART = 'cart/updateCart';
 const PURCHASE = 'cart/purchase';
+
+//! --------------------------------------------------------------------
+//*                           Action Creators
+//! --------------------------------------------------------------------
 
 export const addToCart = (id) => {
     return {
@@ -25,6 +36,23 @@ export const removeFromCart = (id) => {
         payload: id,
     };
 };
+
+//! --------------------------------------------------------------------
+//*                            Selectors
+//! --------------------------------------------------------------------
+
+export const selectCart = (store) => store.cart;
+export const selectCartItemById = (id) => (store) => store.cart[id];
+export const selectCartItems = createSelector(
+    selectCart,
+    selectProduce,
+    (cart, produce) =>
+        Object.values(cart).map((item) => ({ ...item, ...produce[item.id] }))
+);
+
+//! --------------------------------------------------------------------
+//*                             Reducer
+//! --------------------------------------------------------------------
 
 export const purchase = () => ({ type: PURCHASE });
 

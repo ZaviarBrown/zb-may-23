@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../store/cart';
+import { addToCart, selectCartItemById } from '../../store/cart';
 import { toggleLike } from '../../store/produce';
 
 function ProduceDetails({ produce }) {
     const dispatch = useDispatch();
-    const cartItem = useSelector((store) => store.cart[produce.id]);
+    const cartItem = useSelector(selectCartItemById(produce.id));
 
     return (
         <li className="produce-details">
