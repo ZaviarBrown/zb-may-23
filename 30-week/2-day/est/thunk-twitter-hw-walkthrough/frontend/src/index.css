@@ -1,0 +1,12 @@
+/* TODO: Add sitewide styles */
+
+.tweet-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tweet-count {
+    display: flex;
+    justify-content: space-between;
+}
