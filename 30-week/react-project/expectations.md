@@ -22,11 +22,19 @@
 
 ## Your GitHub repo deserves attention too
 
-- Main README present (partially complete)
-- MVP list present (partially complete)
-- Redux state outline (partially complete)
-- API routes (reuse from Mod 4 project)
-- DB Schema (reuse from Mod 4 project)
+- Main README partially complete
+  - Title of project
+  - Brief description
+  - One screenshot
+- MVP list partially complete
+  - Heading for Spots and Reviews
+  - One feature description each
+- Redux state rough outline
+  - [Example](./redux-outline.js)
+- API routes
+  - Reuse from Mod 4 project
+- DB Schema
+  - Reuse from Mod 4 project
 
 ## Some helpful resources
 
